@@ -37,3 +37,14 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         fields = ['body', 'score', 'movie']
         read_only_fields = ['user', ]
+
+
+class ReviewWatchedMovieSerializer(serializers.ModelSerializer):
+    is_watched_by_reviewer = serializers.SerializerMethodField()
+
+    def get_is_watched_by_reviewer(self, review):
+        return review.movie in self.context['request'].user.movies.all()
+
+    class Meta:
+        model = Review
+        fields = ['body', 'score', 'movie', 'is_watched_by_reviewer']

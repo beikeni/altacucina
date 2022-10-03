@@ -140,6 +140,17 @@ curl -X POST https://altacucina.spookykiwi.com/api/v1/reviews/ -H 'Content-Type:
   "movie": 1
 }
 ```
+### List Movie Reviews with ordering
+Returns a list of reviews for the movie id supplied. Additionally, the custom field `is_watched_by_reviewer` indicates whether the user who left the review has watched the movie, helping the reader evaluating the trustworthiness of the information received! 
+
+This endpoints takes a url param called `ordering` that can be set to any field's name. To reverse the ordering add `-` in front of the field name
+```console
+curl https://altacucina.spookykiwi.com/api/v1/reviews/movie/1/?ordering=-score -H 'Content-Type: application/json' -H 'Authorization: Token 2812b81cbbcb4cef2d82051e1251503ffa05ba0c'
+```
+*response*
+```json
+
+```
 
 ### List User Reviews with ordering
 This endpoints takes a url param called `ordering` that can be set to any field's name. To reverse the ordering add `-` in front of the field name

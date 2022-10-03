@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from core.models import Review, Movie
-from core.serializers import ReviewSerializer
+from core.serializers import ReviewSerializer, ReviewWatchedMovieSerializer
 
 
 class ReviewViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, GenericViewSet):
@@ -35,7 +35,8 @@ class ReviewViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, GenericViewS
         """Returns all reviews for a given movie"""
 
         movie = get_object_or_404(Movie, id=kwargs['id'])
-        serializer = self.serializer_class(self.filter_queryset(self.get_custom_queryset(movie)), many=True)
+        serializer = ReviewWatchedMovieSerializer(self.filter_queryset(self.get_custom_queryset(movie)), many=True,
+                                                  context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(methods=['get'], detail=False, url_path='user/(?P<id>[^/.]+)', url_name="list-user-reviews",

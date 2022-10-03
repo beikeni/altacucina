@@ -14,7 +14,7 @@ from core.serializers import ReviewSerializer
 class ReviewViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, GenericViewSet):
     serializer_class = ReviewSerializer
     queryset = Review.objects.all().select_related('user').select_related('movie')
-    permission_classes = [IsAuthenticatedOrReadOnly, IsAuthenticated, ]
+    permission_classes = [IsAuthenticated, ]
 
     def filter_queryset(self, queryset):
         ordering = self.request.GET.get("ordering", None)

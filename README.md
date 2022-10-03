@@ -16,10 +16,10 @@ POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
 POSTGRES_DB=postgres
 ```
-- Run `docker compose up`. The dev server will run on the usual `127.0.0.1:8000`
+- Run `docker compose up`. The dev server will run on the usual `127.0.0.1:8000`=
 
 ## DB Schema
-![db](https://user-images.githubusercontent.com/64857643/193598947-b004cf49-4a77-4871-938f-01502e08a76f.png)
+![db_updated](https://user-images.githubusercontent.com/64857643/193601339-b4b8a435-14fe-4a36-b0ac-6fde50bfa1d8.png)
 - **User** and **Movie** have a **many-to-many** relationship with Watched as a through table. This way it's possible to record the timestamp of the row being created (movie being watched), this could come in useful for all sorts of queries later on.
 - The existence of a **Watched** row between a user and a movie indicates that a certain user watched a certain movie. If a user marks a movie unwatched, then the corresponding row on the Watched table is deleted.
 - Both **User** and **Movie** have a **one-to-many** relationship to **Review**. A user can review a movie even if the movie is not marked as watched, but when the reviews for a certain movie are listed, there will be a flag `is_watched_by_reviewer` indicating whether the user has watched that movie. 

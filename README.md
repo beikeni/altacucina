@@ -16,7 +16,7 @@ POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
 POSTGRES_DB=postgres
 ```
-- Run `docker compose up`. The dev server will run on the usual `127.0.0.1:8000`=
+- Run `docker compose up`. The dev server will run on the usual `127.0.0.1:8000`
 
 ## DB Schema
 ![db_updated](https://user-images.githubusercontent.com/64857643/193601339-b4b8a435-14fe-4a36-b0ac-6fde50bfa1d8.png)

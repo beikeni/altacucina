@@ -149,7 +149,14 @@ curl https://altacucina.spookykiwi.com/api/v1/reviews/movie/1/?ordering=-score -
 ```
 *response*
 ```json
-
+[
+    {
+        "body": "This movie was alright, I just wish there were more bears..",
+        "score": 8,
+        "movie": 1,
+        "is_watched_by_reviewer": true
+    }
+]
 ```
 
 ### List User Reviews with ordering

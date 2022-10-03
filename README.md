@@ -1,4 +1,6 @@
 # Altacucina Backend Test
+`altacucina.spookykiwi.com/api/v1/`
+
 Instead of providing a project to spin up locally I opted for deploying the app so that you could use it directly. Spookykiwi.com is a domain that I own and that I use for testing and learning purposes. 
 
 For this particular excercise I created a new subdomain and secured it with SSL. 

@@ -9,10 +9,35 @@ from rest_framework.viewsets import GenericViewSet
 from core.models import Movie
 from core.serializers import MovieSerializer, WatchedMovieSerializer, MovieWithAverageScoreSerializer
 
+from django.db import connection, reset_queries
+import time
+import functools
+
+
+def query_debugger(func):
+    @functools.wraps(func)
+    def inner_func(*args, **kwargs):
+        reset_queries()
+
+        start_queries = len(connection.queries)
+
+        start = time.perf_counter()
+        result = func(*args, **kwargs)
+        end = time.perf_counter()
+
+        end_queries = len(connection.queries)
+
+        print(f"Function : {func.__name__}")
+        print(f"Number of Queries : {end_queries - start_queries}")
+        print(f"Finished in : {(end - start):.2f}s")
+        return result
+
+    return inner_func
+
 
 class MovieViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, GenericViewSet):
     serializer_class = MovieSerializer
-    queryset = Movie.objects.prefetch_related('reviews__user').prefetch_related('watched__user')
+    queryset = Movie.objects.all()
 
     def get_platform_queryset(self, platform):
         return Movie.objects.filter(platform=platform)
@@ -30,6 +55,7 @@ class MovieViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, GenericViewSe
         serializer = self.serializer_class(self.get_platform_queryset(platform=kwargs['platform']), many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    @query_debugger
     @action(methods=['get'], detail=False, url_path='unwatched-with-review', url_name="unwatched-with-review",
             permission_classes=[IsAuthenticated])
     def list_unwatched_with_review(self, request, *args, **kwargs):
@@ -56,6 +82,7 @@ class MovieViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, GenericViewSe
             'response': f'{movie} has been {"added to" if watched else "removed from"} {str(request.user).title()}\'s list!'},
             status=status.HTTP_200_OK)
 
+    @query_debugger
     def list(self, request, *args, **kwargs):
         """Override to serve two different responses depending on whether the user is authenticated or not"""
 

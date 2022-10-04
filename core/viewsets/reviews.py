@@ -1,3 +1,5 @@
+import functools
+
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404
@@ -13,7 +15,7 @@ from core.serializers import ReviewSerializer, ReviewWatchedMovieSerializer
 
 class ReviewViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, GenericViewSet):
     serializer_class = ReviewSerializer
-    queryset = Review.objects.all().select_related('user').select_related('movie')
+    queryset = Review.objects.all()
     permission_classes = [IsAuthenticated, ]
 
     def filter_queryset(self, queryset):

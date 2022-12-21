@@ -1,4 +1,4 @@
-# Altacucina Backend Test
+# altacucina
 [`altacucina.spookykiwi.com/api/v1/`](https://altacucina.spookykiwi.com/api/v1/) (no longer active)
 
 Instead of providing a project to spin up locally I opted for deploying the app so that you could use it directly. Spookykiwi.com is a domain that I own and that I use for testing and learning purposes. 
